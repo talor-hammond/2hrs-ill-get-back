@@ -21,24 +21,28 @@ namespace hrsillnevergetback
             //}
 
             // Gather / return all the input movie titles into an array:
-            GetMovieTitles();
-           
+            string[] movieTitles = GetMovieTitles(); // need to store this value in a variable, loop through w requests (figure out how to do in parallel like Promise.All()
+
+            foreach (string title in movieTitles)
+            {
+                Console.WriteLine(title);
+            }
             // Request to api w movieTitle:
 
         }
 
         // Methods separate to main entry point:
-        static void GetAppInfo(string appName, string appAuthor) {
+        static void GetAppInfo(string appName, string appAuthor) { // 'void' -- if no return value
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0}, by {1}", appName, appAuthor);
             Console.ResetColor(); // method exposed by the Console class to reset fg & bg colours
         }
 
-        static void GetMovieTitles() {
+        static string[] GetMovieTitles() { // returns an array of strings
             Console.WriteLine("What movie titles did you want to compare? [enter 'q' when finished]");
-            bool stillEnteringTitles = true;
             List<string> movieTitles = new List<string>();
 
+            bool stillEnteringTitles = true;
             while (stillEnteringTitles)
             {
                 string input = Console.ReadLine();
@@ -53,9 +57,7 @@ namespace hrsillnevergetback
                 }
             }
 
-            foreach (string title in movieTitles.ToArray()) {
-                Console.WriteLine(title);
-            }
+            return movieTitles.ToArray(); // .ToArray(): method exposed by List obj
         }
     }
 }
