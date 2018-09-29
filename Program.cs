@@ -1,5 +1,6 @@
 ﻿using System; // makes the 'Console' class available to the program
-using System.Collections.Generic; // Makes 'List' available
+using System.Collections.Generic; // Makes 'List' obj available
+using System.Net.Http;
 
 namespace hrsillnevergetback
 {
@@ -59,7 +60,9 @@ namespace hrsillnevergetback
         // For gathering relevant movie information from omdb api:
         static void RequestMovieInformation(string title)
         {
-            // Request to api w title...
+            HttpClient client = new HttpClient();
+
+
 
             Console.WriteLine("Nothing was found; default");
         }
