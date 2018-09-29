@@ -2,6 +2,7 @@
 using System.Collections.Generic; // Makes 'List' obj available
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace hrsillnevergetback
 {
@@ -21,6 +22,7 @@ namespace hrsillnevergetback
                 try
                 {
                     RequestMovieInformation(title).Wait();
+                    Console.WriteLine();
                 }
                 catch (Exception ex)
                 {
@@ -68,19 +70,19 @@ namespace hrsillnevergetback
         // For gathering relevant movie information from omdb api:
         static public async Task RequestMovieInformation(string title)
         {
-            Console.WriteLine($"Fetching information for '{title}'");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"Fetching information for '{title}'...");
+            Console.ResetColor();
 
             string url = "http://www.omdbapi.com/";
             string apiKey = "4edeff6c";
             HttpClient client = new HttpClient();
 
-            HttpResponseMessage response = await client.GetAsync($"{url}?t={title}&apikey={apiKey}");
+            string response = await client.GetStringAsync($"{url}?t={title}&apikey={apiKey}");
 
-            HttpContent content = response.Content;
 
-            string myContent = await content.ReadAsStringAsync();
 
-            Console.WriteLine(myContent);
+            Console.WriteLine(response);
         }
     }
 }
