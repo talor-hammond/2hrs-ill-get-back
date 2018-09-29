@@ -9,11 +9,11 @@ namespace hrsillnevergetback
         public static void Main(string[] args) //  'static'; no 'instances'
         {
             // Variable declaration: type is prefixed...
-            string name = "Talor";
-            int age = 22;
+            string appName = "2hrs I Won't Need Back";
+            string appAuthor = "Talor Hammond";
 
             //Console.WriteLine("Hello " + name);
-            Console.WriteLine("{0} is age: {1}", name, age);
+            Console.WriteLine("{0}, by {1}", appName, appAuthor);
         }
     }
 }
