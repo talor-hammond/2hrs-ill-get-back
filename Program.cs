@@ -10,13 +10,14 @@ namespace hrsillnevergetback
     class Program
     {
         // 'Entry-point' method; invoked when Program is initialised
-        public static void Main(string[] args) // 'PascalCase' for methods
+        public static void Main(string[] args)
         {
-            GetAppInfo("2hrs I Won't Need Back", "Talor Hammond");
+            GetAppInfo("MoviePicker", "T. Hammond");
 
             // Gather / return all the input movie titles into an array:
             string[] movieTitles = GetMovieTitles(); // need to store this value in a variable, loop through w requests (figure out how to do in parallel like Promise.All()
 
+            // Grab and display movie data for each movie title input:
             foreach (string title in movieTitles)
             {
                 try
@@ -31,7 +32,6 @@ namespace hrsillnevergetback
         }
 
         // Methods separate to main entry point ----------------------------------------------------------------------------------
-
         // For initialising app info:
         static void GetAppInfo(string appName, string appAuthor) // 'void' -- if no return value
         {
@@ -83,6 +83,7 @@ namespace hrsillnevergetback
             WriteMovieDetails(movieDetails);
         }
 
+        // For writing the relevant movie details to the console:
         static public void WriteMovieDetails(JObject details)
         {
             // Plot:
