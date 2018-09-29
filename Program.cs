@@ -37,7 +37,7 @@ namespace hrsillnevergetback
 
         // For initialising app info:
         static void GetAppInfo(string appName, string appAuthor) // 'void' -- if no return value
-        { 
+        {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0}, by {1}", appName, appAuthor);
             Console.ResetColor(); // method exposed by the Console class to reset fg & bg colours
@@ -82,7 +82,8 @@ namespace hrsillnevergetback
 
             JObject movieDetails = JObject.Parse(response);
 
-            Console.WriteLine(movieDetails.ToString());
+            // Presenting our parsed-data:
+            Console.WriteLine($"Plot: {movieDetails["Plot"]}");
         }
     }
 }
