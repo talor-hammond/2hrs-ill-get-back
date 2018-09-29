@@ -22,7 +22,6 @@ namespace hrsillnevergetback
                 try
                 {
                     RequestMovieInformation(title).Wait();
-                    Console.WriteLine();
                 }
                 catch (Exception ex)
                 {
@@ -83,7 +82,21 @@ namespace hrsillnevergetback
             JObject movieDetails = JObject.Parse(response);
 
             // Presenting our parsed-data:
+            // Plot:
             Console.WriteLine($"Plot: {movieDetails["Plot"]}");
+            Console.WriteLine();
+            // Genre:
+            Console.WriteLine($"Genre: {movieDetails["Genre"]}");
+            Console.WriteLine();
+            // Ratings:
+            Console.WriteLine($"iMDB Rating: {movieDetails["Ratings"][0]["Value"]}");
+            Console.WriteLine($"Rotten Tomatoes Rating: {movieDetails["Ratings"][1]["Value"]}");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("-----------------------");
+            Console.ResetColor();
+            Console.WriteLine();
         }
     }
 }
