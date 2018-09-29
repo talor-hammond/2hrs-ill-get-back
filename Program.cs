@@ -1,6 +1,7 @@
 ﻿using System; // makes the 'Console' class available to the program
 using System.Collections.Generic; // Makes 'List' obj available
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace hrsillnevergetback
 {
@@ -17,7 +18,14 @@ namespace hrsillnevergetback
 
             foreach (string title in movieTitles)
             {
-                RequestMovieInformation(title);
+                try
+                {
+                    RequestMovieInformation(title).Wait();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"There was an exception: {ex}");
+                }
             }
             // Request to api w movieTitle:
 
@@ -58,13 +66,21 @@ namespace hrsillnevergetback
         }
 
         // For gathering relevant movie information from omdb api:
-        static void RequestMovieInformation(string title)
+        static public async Task RequestMovieInformation(string title)
         {
+            Console.WriteLine($"Fetching information for '{title}'");
+
+            string url = "http://www.omdbapi.com/";
+            string apiKey = "4edeff6c";
             HttpClient client = new HttpClient();
 
+            HttpResponseMessage response = await client.GetAsync($"{url}?t={title}&apikey={apiKey}");
 
+            HttpContent content = response.Content;
 
-            Console.WriteLine("Nothing was found; default");
+            string myContent = await content.ReadAsStringAsync();
+
+            Console.WriteLine(myContent);
         }
     }
 }
