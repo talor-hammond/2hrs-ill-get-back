@@ -8,7 +8,12 @@ namespace hrsillnevergetback
         // 'Entry-point' method
         public static void Main(string[] args) //  'static'; no 'instances'
         {
-            Console.WriteLine("Hello world");
+            // Variable declaration: type is prefixed...
+            string name = "Talor";
+            int age = 22;
+
+            //Console.WriteLine("Hello " + name);
+            Console.WriteLine("{0} is age: {1}", name, age);
         }
     }
 }
