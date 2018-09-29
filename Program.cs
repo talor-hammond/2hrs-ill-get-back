@@ -1,4 +1,5 @@
 ﻿using System; // makes the 'Console' class available to the program
+using System.Collections.Generic; // Makes 'List' available
 
 namespace hrsillnevergetback
 {
@@ -10,10 +11,13 @@ namespace hrsillnevergetback
         {
             GetAppInfo("2hrs I Won't Need Back", "Talor Hammond");
 
-            // Gather movie title from console input:
-            Console.WriteLine("What movie title did you want to check?");
-            string movieTitle = Console.ReadLine();
-            Console.WriteLine("Gathering rating & details for '{0}'...", movieTitle);
+            // Gather / return all the input movie titles into an array
+            Console.WriteLine("What movie titles did you want to compare? [separate by comma, ',']");
+            string[] movieTitles = Console.ReadLine().Split(','); // should return an array of strings into the movieTitles variable
+
+            foreach(string title in movieTitles) {
+                Console.WriteLine(title);
+            }
 
             // Request to api w movieTitle:
 
