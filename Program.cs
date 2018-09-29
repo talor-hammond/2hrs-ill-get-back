@@ -11,41 +11,37 @@ namespace hrsillnevergetback
         {
             GetAppInfo("2hrs I Won't Need Back", "Talor Hammond");
 
-            // Gather / return all the input movie titles into an array
-            //Console.WriteLine("What movie titles did you want to compare? [separate by comma, ',']");
-            //string[] movieTitles = Console.ReadLine().Split(','); // should return an array of strings into the movieTitles variable
-
-            //foreach (string title in movieTitles)
-            //{
-            //    Console.WriteLine(title);
-            //}
-
             // Gather / return all the input movie titles into an array:
             string[] movieTitles = GetMovieTitles(); // need to store this value in a variable, loop through w requests (figure out how to do in parallel like Promise.All()
 
             foreach (string title in movieTitles)
             {
-                Console.WriteLine(title);
+                RequestMovieInformation(title);
             }
             // Request to api w movieTitle:
 
         }
 
-        // Methods separate to main entry point:
-        static void GetAppInfo(string appName, string appAuthor) { // 'void' -- if no return value
+        // Methods separate to main entry point ----------------------------------------------------------------------------------
+
+        // For initialising app info:
+        static void GetAppInfo(string appName, string appAuthor) // 'void' -- if no return value
+        { 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0}, by {1}", appName, appAuthor);
             Console.ResetColor(); // method exposed by the Console class to reset fg & bg colours
         }
 
-        static string[] GetMovieTitles() { // returns an array of strings
+        // For getting an array of movie titles from user input:
+        static string[] GetMovieTitles() // returns an array of strings
+        {
             Console.WriteLine("What movie titles did you want to compare? [enter 'q' when finished]");
             List<string> movieTitles = new List<string>();
 
             bool stillEnteringTitles = true;
             while (stillEnteringTitles)
             {
-                string input = Console.ReadLine();
+                string input = Console.ReadLine(); // prompt the user for new input at the start of each loop
 
                 if (input != "q")
                 { // If the user hasn't exit'd the program w 'q', add the input to our array
@@ -58,6 +54,14 @@ namespace hrsillnevergetback
             }
 
             return movieTitles.ToArray(); // .ToArray(): method exposed by List obj
+        }
+
+        // For gathering relevant movie information from omdb api:
+        static void RequestMovieInformation(string title)
+        {
+            // Request to api w title...
+
+            Console.WriteLine("Nothing was found; default");
         }
     }
 }
