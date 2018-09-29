@@ -9,7 +9,7 @@ namespace hrsillnevergetback
     // Primary class:
     class Program
     {
-        // 'Entry-point' method
+        // 'Entry-point' method; invoked when Program is initialised
         public static void Main(string[] args) // 'PascalCase' for methods
         {
             GetAppInfo("2hrs I Won't Need Back", "Talor Hammond");
@@ -28,8 +28,6 @@ namespace hrsillnevergetback
                     Console.WriteLine($"There was an exception: {ex}");
                 }
             }
-            // Request to api w movieTitle:
-
         }
 
         // Methods separate to main entry point ----------------------------------------------------------------------------------
@@ -82,15 +80,20 @@ namespace hrsillnevergetback
             JObject movieDetails = JObject.Parse(response);
 
             // Presenting our parsed-data:
+            WriteMovieDetails(movieDetails);
+        }
+
+        static public void WriteMovieDetails(JObject details)
+        {
             // Plot:
-            Console.WriteLine($"Plot: {movieDetails["Plot"]}");
+            Console.WriteLine($"Plot: {details["Plot"]}");
             Console.WriteLine();
             // Genre:
-            Console.WriteLine($"Genre: {movieDetails["Genre"]}");
+            Console.WriteLine($"Genre: {details["Genre"]}");
             Console.WriteLine();
             // Ratings:
-            Console.WriteLine($"iMDB Rating: {movieDetails["Ratings"][0]["Value"]}");
-            Console.WriteLine($"Rotten Tomatoes Rating: {movieDetails["Ratings"][1]["Value"]}");
+            Console.WriteLine($"iMDB Rating: {details["Ratings"][0]["Value"]}");
+            Console.WriteLine($"Rotten Tomatoes Rating: {details["Ratings"][1]["Value"]}");
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
