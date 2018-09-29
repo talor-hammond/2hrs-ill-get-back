@@ -4,3 +4,6 @@
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.exe
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.pdb
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.csprojAssemblyReference.cache
+/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/Newtonsoft.Json.dll
+/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/Newtonsoft.Json.xml
+/Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.csproj.CopyComplete

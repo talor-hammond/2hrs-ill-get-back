@@ -80,9 +80,9 @@ namespace hrsillnevergetback
 
             string response = await client.GetStringAsync($"{url}?t={title}&apikey={apiKey}");
 
+            JObject movieDetails = JObject.Parse(response);
 
-
-            Console.WriteLine(response);
+            Console.WriteLine(movieDetails.ToString());
         }
     }
 }
