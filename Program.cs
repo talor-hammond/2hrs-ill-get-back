@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace hrsillnevergetback
+namespace Hoursillgetback
 {
     // Primary class:
     class Program
@@ -26,8 +26,29 @@ namespace hrsillnevergetback
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"There was an exception: {ex}");
+                    Console.WriteLine($"Had an error finding stuff for '{title}'!");
                 }
+            }
+
+            string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
+            string[] negatives = { "n", "no", "nah", "not yet", "nope" };
+
+            Console.WriteLine("Finished searching?");
+            string answer = Console.ReadLine();
+
+            if (Array.Exists(affirmatives, el => el == answer))
+            {
+                // Change value that exits out of loop
+                Console.WriteLine("You wanted to exit");
+            }
+            else if (Array.Exists(negatives, el => el == answer))
+            {
+                // J return to continue loop
+                Console.WriteLine("You wanted to continue");
+            }
+            else // if the user input was invalid / not recognised...
+            {
+                Console.WriteLine("Oops");
             }
         }
 
