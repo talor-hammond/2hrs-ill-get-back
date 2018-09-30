@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
+// TODO: Web-scrape top movie / series titles by genre (randomly pick 3 of top 10) -- get information for all of the titles that come back:
+
 namespace Hoursillgetback
 {
     // Primary class:
@@ -12,44 +14,37 @@ namespace Hoursillgetback
         // 'Entry-point' method; invoked when Program is initialised
         public static void Main(string[] args)
         {
-            bool isRunning = true;
+            // TODO: Two separate programs -- one for when user has titles already, on for if a user wants to search by genre/
+
+            bool enteringByTitles = true;
             string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
             string[] negatives = { "n", "no", "nah", "not yet", "nope" };
 
             GetAppInfo("MoviePicker", "T. Hammond");
 
-            while (isRunning) {
+            while (enteringByTitles) // TODO: need to wrap this functionality into its own program
+            {
                 // Gather / return all the input movie titles into an array:
                 string[] movieTitles = GetMovieTitles();
-                
+
                 // Grab and display movie data for each movie title input:
-                foreach (string title in movieTitles)
-                {
-                    try
-                    {
-                        RequestMovieInformation(title).Wait();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Had an error finding stuff for '{title}'!");
-                    }
-                }
+                PresentInformationByTitles(movieTitles);
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Finished searching?");
                 Console.ResetColor();
 
                 string answer = Console.ReadLine();
-                
+
                 if (Array.Exists(affirmatives, el => el == answer))
                 {
                     // Change value that exits out of loop
-                    isRunning = false;
+                    enteringByTitles = false;
                 }
                 else if (Array.Exists(negatives, el => el == answer))
                 {
                     // J return to continue loop
-                    isRunning = true;
+                    enteringByTitles = true;
                 }
                 else // if the user input was invalid / not recognised...
                 {
@@ -91,7 +86,26 @@ namespace Hoursillgetback
             return movieTitles.ToArray(); // .ToArray(): method exposed by List obj
         }
 
-        // For gathering relevant movie information from omdb api:
+        // For displaying an array of movie information:
+        static public void PresentInformationByTitles(string[] titles)
+        {
+            foreach (string title in titles)
+            {
+                try
+                {
+                    RequestMovieInformation(title).Wait();
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"There was an exception for '{title}': ");
+                    Console.WriteLine($"{ex}");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // For gathering specific movie information by title from omdb api:
         static public async Task RequestMovieInformation(string title)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
