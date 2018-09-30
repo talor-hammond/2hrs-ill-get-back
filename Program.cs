@@ -12,43 +12,49 @@ namespace Hoursillgetback
         // 'Entry-point' method; invoked when Program is initialised
         public static void Main(string[] args)
         {
-            GetAppInfo("MoviePicker", "T. Hammond");
-
-            // Gather / return all the input movie titles into an array:
-            string[] movieTitles = GetMovieTitles(); // need to store this value in a variable, loop through w requests (figure out how to do in parallel like Promise.All()
-
-            // Grab and display movie data for each movie title input:
-            foreach (string title in movieTitles)
-            {
-                try
-                {
-                    RequestMovieInformation(title).Wait();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Had an error finding stuff for '{title}'!");
-                }
-            }
-
+            bool isRunning = true;
             string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
             string[] negatives = { "n", "no", "nah", "not yet", "nope" };
 
-            Console.WriteLine("Finished searching?");
-            string answer = Console.ReadLine();
+            GetAppInfo("MoviePicker", "T. Hammond");
 
-            if (Array.Exists(affirmatives, el => el == answer))
-            {
-                // Change value that exits out of loop
-                Console.WriteLine("You wanted to exit");
-            }
-            else if (Array.Exists(negatives, el => el == answer))
-            {
-                // J return to continue loop
-                Console.WriteLine("You wanted to continue");
-            }
-            else // if the user input was invalid / not recognised...
-            {
-                Console.WriteLine("Oops");
+            while (isRunning) {
+                // Gather / return all the input movie titles into an array:
+                string[] movieTitles = GetMovieTitles();
+                
+                // Grab and display movie data for each movie title input:
+                foreach (string title in movieTitles)
+                {
+                    try
+                    {
+                        RequestMovieInformation(title).Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Had an error finding stuff for '{title}'!");
+                    }
+                }
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Finished searching?");
+                Console.ResetColor();
+
+                string answer = Console.ReadLine();
+                
+                if (Array.Exists(affirmatives, el => el == answer))
+                {
+                    // Change value that exits out of loop
+                    isRunning = false;
+                }
+                else if (Array.Exists(negatives, el => el == answer))
+                {
+                    // J return to continue loop
+                    isRunning = true;
+                }
+                else // if the user input was invalid / not recognised...
+                {
+                    Console.WriteLine("Oops");
+                }
             }
         }
 
@@ -115,7 +121,7 @@ namespace Hoursillgetback
             Console.WriteLine();
             // Ratings:
             Console.WriteLine($"iMDB Rating: {details["Ratings"][0]["Value"]}");
-            Console.WriteLine($"Rotten Tomatoes Rating: {details["Ratings"][1]["Value"]}");
+            //Console.WriteLine($"Rotten Tomatoes Rating: {details["Ratings"][1]["Value"]}"); // Not every movie on db has rt rating.
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
