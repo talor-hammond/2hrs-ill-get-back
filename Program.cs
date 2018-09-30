@@ -18,19 +18,14 @@ namespace Hoursillgetback
         {
             GetAppInfo("MoviePicker", "T. Hammond");
 
-            bool enteringByTitles = true;
+            // bools provide a switch to different programs:
+            bool enteringByTitles = false;
+            bool enteringByGenre = true;
             // if the user wants to enter a genre...
             // ...method to return a relative url dynamically based on the input genre: (feed this into our scraper)
 
             string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
             string[] negatives = { "n", "no", "nah", "not yet", "nope" };
-           
-            // web-scraping praccccccc / testing:
-            HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb(); // our disposable browser
-            HtmlAgilityPack.HtmlDocument doc = web.Load("https://www.imdb.com/search/title?genres=thriller&sort=user_rating,desc&title_type=tv_series,mini_series&num_votes=5000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=f85d9bf4-1542-48d1-a7f9-48ac82dd85e7&pf_rd_r=7NT5BKR5TETJR3812F9T&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_gnr_8");
-
-            var titleNode = doc.DocumentNode.SelectSingleNode("//h3[@class='lister-item-header']").SelectSingleNode(".//a").InnerText;
-            Console.WriteLine(titleNode);
 
             while (enteringByTitles) // TODO: need to wrap this functionality into its own program
             {
@@ -62,6 +57,24 @@ namespace Hoursillgetback
                     Console.WriteLine("Input was invalid, continuing program..."); // TODO: need it to ask for prompt and re-eval 
                 }
             }
+
+            while (enteringByGenre)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("What genre were you after?");
+                string genre = Console.ReadLine();
+                Console.WriteLine("Searching...");
+
+                HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb(); // our disposable browser
+                HtmlAgilityPack.HtmlDocument doc = web.Load($"https://www.imdb.com/search/title?genres={genre}&sort=user_rating,desc&title_type=tv_series,mini_series&num_votes=5000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=f85d9bf4-1542-48d1-a7f9-48ac82dd85e7&pf_rd_r=7NT5BKR5TETJR3812F9T&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_gnr_8");
+
+                var titleNodes = doc.DocumentNode.SelectNodes("//h3[@class='lister-item-header']");
+
+                foreach (var title in titleNodes)
+                {
+                    Console.WriteLine(title.SelectSingleNode(".//a").InnerText); // grab the title text out of just the <a> child el
+                }
+            }
         }
 
         // Methods separate to main entry point ----------------------------------------------------------------------------------
@@ -70,7 +83,7 @@ namespace Hoursillgetback
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0}, by {1}", appName, appAuthor);
-            Console.ResetColor(); // method exposed by the Console class to reset fg & bg colours
+            Console.ResetColor();
         }
 
         // For getting an array of movie titles from user input:
