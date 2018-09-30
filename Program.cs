@@ -30,6 +30,7 @@ namespace Hoursillgetback
                 // Grab and display movie data for each movie title input:
                 PresentInformationByTitles(movieTitles);
 
+                // After the relevant info has been presented -- check the user has finished searching:
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Finished searching?");
                 Console.ResetColor();
@@ -46,9 +47,9 @@ namespace Hoursillgetback
                     // J return to continue loop
                     enteringByTitles = true;
                 }
-                else // if the user input was invalid / not recognised...
+                else // if the user input was invalid / not recognised... TODO: sort functionality here
                 {
-                    Console.WriteLine("Oops");
+                    Console.WriteLine("Input was invalid, continuing program...");
                 }
             }
         }
