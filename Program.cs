@@ -67,27 +67,13 @@ namespace Hoursillgetback
                 string genre = Console.ReadLine();
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
                 Console.WriteLine("Searching...");
                 Console.ResetColor();
 
-                HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb(); // our disposable browser
-                HtmlAgilityPack.HtmlDocument doc = web.Load($"https://www.imdb.com/search/title?genres={genre}&sort=user_rating,desc&title_type=tv_series,mini_series&num_votes=5000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=f85d9bf4-1542-48d1-a7f9-48ac82dd85e7&pf_rd_r=7NT5BKR5TETJR3812F9T&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_gnr_8");
+                string[] titles = FetchUniqueTitlesByGenre(genre);
 
-                var titleNodes = doc.DocumentNode.SelectNodes("//h3[@class='lister-item-header']");
-
-                List<string> titles = new List<string>();
-
-                // Pushing the first 5 results on to our titles List...
-                int[] randomIndexes = GenerateUniqueIndexes(titleNodes.Count - 1); // generating an array of random indexes between 0 and one less than titles.
-
-                foreach (int index in randomIndexes)
-                {
-                    string titleText = titleNodes[index].SelectSingleNode(".//a").InnerText;
-                    titles.Add(titleText);
-                }
                 // ...then
-                PresentInformationByTitles(titles.ToArray());
+                PresentInformationByTitles(titles);
             }
         }
 
@@ -192,6 +178,27 @@ namespace Hoursillgetback
             }
 
             return indexes.ToArray();
+        }
+
+        // For grabbing five unique titles from iMDB's top-rated by genre:
+        static string[] FetchUniqueTitlesByGenre(string genre)
+        {
+            List<string> titles = new List<string>();
+
+            HtmlAgilityPack.HtmlWeb web = new HtmlAgilityPack.HtmlWeb(); // our disposable browser
+            HtmlAgilityPack.HtmlDocument doc = web.Load($"https://www.imdb.com/search/title?genres={genre}&sort=user_rating,desc&title_type=tv_series,mini_series&num_votes=5000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=f85d9bf4-1542-48d1-a7f9-48ac82dd85e7&pf_rd_r=7NT5BKR5TETJR3812F9T&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=toptv&ref_=chttvtp_gnr_8");
+
+            var titleNodes = doc.DocumentNode.SelectNodes("//h3[@class='lister-item-header']");
+
+            int[] randomIndexes = GenerateUniqueIndexes(titleNodes.Count - 1); // generating an array of random indexes between 0 and one less than titles.
+
+            foreach (int index in randomIndexes)
+            {
+                string titleText = titleNodes[index].SelectSingleNode(".//a").InnerText;
+                titles.Add(titleText);
+            }
+
+            return titles.ToArray();
         }
     }
 }

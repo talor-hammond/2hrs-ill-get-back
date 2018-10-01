@@ -1,12 +1,11 @@
 /Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/2hrs-ill-never-get-back.exe
 /Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/2hrs-ill-never-get-back.pdb
+/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/HtmlAgilityPack.dll
 /Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/Newtonsoft.Json.dll
 /Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/Newtonsoft.Json.xml
-/Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.csprojAssemblyReference.cache
+/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/HtmlAgilityPack.pdb
+/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/HtmlAgilityPack.xml
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.csproj.CoreCompileInputs.cache
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.csproj.CopyComplete
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.exe
 /Users/tay/Projects/2hrs-ill-never-get-back/obj/x86/Debug/2hrs-ill-never-get-back.pdb
-/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/HtmlAgilityPack.dll
-/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/HtmlAgilityPack.pdb
-/Users/tay/Projects/2hrs-ill-never-get-back/bin/Debug/HtmlAgilityPack.xml
