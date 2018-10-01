@@ -5,6 +5,7 @@ using System.Xml;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using HtmlAgilityPack;
+using System.Runtime.InteropServices.
 
 // TODO: Web-scrape top movie / series titles by genre (randomly pick 3 of top 10) -- get information for all of the titles that come back:
 
@@ -58,6 +59,7 @@ namespace Hoursillgetback
                 }
             }
 
+            // Wrap this logic into its own method / program? Look into (needs access to global vars to switch on bools)
             while (enteringByGenre)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -77,8 +79,8 @@ namespace Hoursillgetback
 
                 List<string> titles = new List<string>();
 
-                // Pushing the first 10 results on to our titles List...
-                for (int i = 0; i < 10; i++)
+                // Pushing the first 5 results on to our titles List...
+                for (int i = 0; i < 5; i++)
                 {
                     string titleText = titleNodes[i].SelectSingleNode(".//a").InnerText;
                     titles.Add(titleText);
@@ -109,14 +111,10 @@ namespace Hoursillgetback
             {
                 string input = Console.ReadLine(); // prompt the user for new input at the start of each loop
 
-                if (input != "q")
-                { // If the user hasn't exit'd the program w 'q', add the input to our array
+                if (input != "q") // If the user hasn't exit'd the program w 'q', add the input to our array
                     movieTitles.Add(input);
-                }
                 else
-                {
                     stillEnteringTitles = false;
-                }
             }
 
             return movieTitles.ToArray(); // .ToArray(): method exposed by List obj
@@ -178,6 +176,22 @@ namespace Hoursillgetback
             Console.WriteLine("-----------------------");
             Console.ResetColor();
             Console.WriteLine();
+        }
+
+        // generating 5 random indexes between 0 and the specified max.
+        int[] GenerateUniqueIndexes(int max)
+        {
+            List<int> indexes = new List<int>();
+            Random rnd = new Random();
+
+            while (indexes.Count < 5)
+            {
+                int randomIndex = rnd.Next(0, max);
+                if (!indexes.Contains(randomIndex))
+                    indexes.Add(randomIndex);
+            }
+
+            return indexes.ToArray();
         }
     }
 }
