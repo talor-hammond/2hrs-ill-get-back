@@ -18,14 +18,33 @@ namespace Hoursillgetback
         {
             GetAppInfo("MoviePicker", "T. Hammond");
 
-            // bools provide a switch to different programs:
-            bool enteringByTitles = false;
-            bool enteringByGenre = true;
-            // if the user wants to enter a genre...
-            // ...method to return a relative url dynamically based on the input genre: (feed this into our scraper)
-
             string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
             string[] negatives = { "n", "no", "nah", "not yet", "nope" };
+
+            // bools provide a switch to different programs:
+            bool enteringByTitles = false;
+            bool enteringByGenre = false;
+
+            // TODO: Wrap these red-coloured console messages into own method.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Did you want info for titles you wanted to compare? Or did you want top-rated picks by genre?");
+            Console.ResetColor();
+            string input = Console.ReadLine().ToLower();
+
+            if (input == "title" || input == "titles")
+            {
+                enteringByTitles = true;
+            }
+            else if (input == "genre")
+            {
+                enteringByGenre = true;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Oops, please try 'title', or 'genre'");
+                Console.ResetColor();
+            }
 
             while (enteringByTitles) // TODO: need to wrap this functionality into its own program?
             {
@@ -44,12 +63,10 @@ namespace Hoursillgetback
 
                 if (Array.Exists(affirmatives, el => el == answer))
                 {
-                    // Change value that exits out of loop
-                    enteringByTitles = false;
+                    enteringByTitles = false; // exits out of the loop.
                 }
                 else if (Array.Exists(negatives, el => el == answer))
                 {
-                    // J return to continue loop
                     enteringByTitles = true;
                 }
                 else // if the user input was invalid / not recognised... TODO: sort functionality here
@@ -70,6 +87,7 @@ namespace Hoursillgetback
                 Console.WriteLine("Searching...");
                 Console.ResetColor();
 
+                // Gather an array of randomly-picked titles from iMDB's top-rated page:
                 string[] titles = FetchUniqueTitlesByGenre(genre);
 
                 // ...then
@@ -155,7 +173,6 @@ namespace Hoursillgetback
             Console.WriteLine();
             // Ratings:
             Console.WriteLine($"iMDB Rating: {details["Ratings"][0]["Value"]}");
-            //Console.WriteLine($"Rotten Tomatoes Rating: {details["Ratings"][1]["Value"]}"); // Not every movie on db has rt rating.
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
