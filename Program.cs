@@ -5,7 +5,6 @@ using System.Xml;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using HtmlAgilityPack;
-using System.Runtime.InteropServices.
 
 // TODO: Web-scrape top movie / series titles by genre (randomly pick 3 of top 10) -- get information for all of the titles that come back:
 
@@ -28,7 +27,7 @@ namespace Hoursillgetback
             string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
             string[] negatives = { "n", "no", "nah", "not yet", "nope" };
 
-            while (enteringByTitles) // TODO: need to wrap this functionality into its own program
+            while (enteringByTitles) // TODO: need to wrap this functionality into its own program?
             {
                 // Gather / return all the input movie titles into an array:
                 string[] movieTitles = GetMovieTitles();
@@ -80,12 +79,13 @@ namespace Hoursillgetback
                 List<string> titles = new List<string>();
 
                 // Pushing the first 5 results on to our titles List...
-                for (int i = 0; i < 5; i++)
+                int[] randomIndexes = GenerateUniqueIndexes(titleNodes.Count - 1); // generating an array of random indexes between 0 and one less than titles.
+
+                foreach (int index in randomIndexes)
                 {
-                    string titleText = titleNodes[i].SelectSingleNode(".//a").InnerText;
+                    string titleText = titleNodes[index].SelectSingleNode(".//a").InnerText;
                     titles.Add(titleText);
                 }
-
                 // ...then
                 PresentInformationByTitles(titles.ToArray());
             }
@@ -179,7 +179,7 @@ namespace Hoursillgetback
         }
 
         // generating 5 random indexes between 0 and the specified max.
-        int[] GenerateUniqueIndexes(int max)
+        static int[] GenerateUniqueIndexes(int max)
         {
             List<int> indexes = new List<int>();
             Random rnd = new Random();
