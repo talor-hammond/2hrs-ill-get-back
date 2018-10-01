@@ -104,6 +104,14 @@ namespace Hoursillgetback
             Console.ResetColor();
         }
 
+        // For writing a red-coloured console message to the console:
+        static void PrintRedMessageToConsole(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
         // For getting an array of movie titles from user input:
         static string[] GetMovieTitles() // returns an array of strings
         {
