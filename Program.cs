@@ -26,9 +26,7 @@ namespace Hoursillgetback
             bool enteringByGenre = false;
 
             // TODO: Wrap these red-coloured console messages into own method.
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Did you want info for titles you wanted to compare? Or did you want top-rated picks by genre?");
-            Console.ResetColor();
+            PrintRedMessageToConsole("Did you want info for titles you wanted to compare? Or did you want top-rated picks by genre?");
             string input = Console.ReadLine().ToLower();
 
             if (input == "title" || input == "titles")
@@ -41,9 +39,7 @@ namespace Hoursillgetback
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Oops, please try 'title', or 'genre'");
-                Console.ResetColor();
+                PrintRedMessageToConsole("Oops, please try 'title', or 'genre'");
             }
 
             while (enteringByTitles) // TODO: need to wrap this functionality into its own program?
@@ -55,10 +51,7 @@ namespace Hoursillgetback
                 PresentInformationByTitles(movieTitles);
 
                 // After the relevant info has been presented -- check the user has finished searching:
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Finished searching?");
-                Console.ResetColor();
-
+                PrintRedMessageToConsole("Finished searching?");
                 string answer = Console.ReadLine();
 
                 if (Array.Exists(affirmatives, el => el == answer))
@@ -78,16 +71,11 @@ namespace Hoursillgetback
             // Wrap this logic into its own method / program? Look into (needs access to global vars to switch on bools)
             while (enteringByGenre)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("What genre were you after?");
-                Console.ResetColor();
+                PrintRedMessageToConsole("What genre were you after?");
                 string genre = Console.ReadLine();
 
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Searching...");
-                Console.ResetColor();
-
-                // Gather an array of randomly-picked titles from iMDB's top-rated page:
+                // Begin grabbing random titles by genre from iMDBB and store them as an array:
+                PrintRedMessageToConsole("Searching...");
                 string[] titles = FetchUniqueTitlesByGenre(genre);
 
                 // ...then
@@ -102,6 +90,7 @@ namespace Hoursillgetback
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0}, by {1}", appName, appAuthor);
             Console.ResetColor();
+            Console.WriteLine();
         }
 
         // For writing a red-coloured console message to the console:
@@ -141,12 +130,10 @@ namespace Hoursillgetback
                 {
                     RequestMovieInformation(title).Wait();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"There was an exception for '{title}': ");
-                    Console.WriteLine($"{ex}");
-                    Console.ResetColor();
+                    PrintRedMessageToConsole($"Couldn't manage to find anything for '{title}'!");
+                    //Console.WriteLine($"{ex}"); ...for Exception ex 
                 }
             }
         }
@@ -183,9 +170,7 @@ namespace Hoursillgetback
             Console.WriteLine($"iMDB Rating: {details["Ratings"][0]["Value"]}");
             Console.WriteLine();
 
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("-----------------------");
-            Console.ResetColor();
+            PrintRedMessageToConsole("-----------------------");
             Console.WriteLine();
         }
 
