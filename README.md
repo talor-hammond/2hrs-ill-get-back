@@ -1,5 +1,5 @@
 # 2hrs-ill-get-back
-C# .NET async-console program that helps you pick the right movie every time (25% of the time) -- **don't waste 2hrs of your life ever again**
+C# .NET async-console program that helps you pick the right movie every time (25% of the time)
 
 ### The problem
 * I was inspired to learn some C# and build this program after watching the *worst movie I have ever seen*: [Buried](https://www.imdb.com/title/tt1462758/) (**please don't watch it**).
