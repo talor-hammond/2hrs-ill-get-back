@@ -18,21 +18,13 @@ namespace Hoursillgetback
         {
             GetAppInfo("MoviePicker", "T. Hammond");
 
-            string enteringBy = ""; // TODO: wrap the logic below into method that returns a string into this variable
-
+            // Ask the user what type of search they want to make:
             PrintRedMessageToConsole("Did you want info for titles you wanted to compare?");
             PrintRedMessageToConsole("Or did you want top-rated picks by genre?");
             Console.WriteLine("Try entering 'titles', or 'genre'...");
             Console.WriteLine();
 
-            string input = Console.ReadLine().ToLower();
-
-            if (input == "title" || input == "titles")
-                enteringBy = "titles";
-            else if (input == "genre")
-                enteringBy = "genre";
-            else
-                PrintRedMessageToConsole("Oops, please try 'title', or 'genre'");
+            string enteringBy = CheckWhatUserWants();
 
             // Init program:
             if (enteringBy == "titles")
@@ -224,6 +216,20 @@ namespace Hoursillgetback
                 PrintRedMessageToConsole("Input was invalid, continuining program"); // TODO: need it to ask for prompt and re-eval 
                 return true;
             }
+        }
+
+        // For determing what type of search the user wants to make:
+        static string CheckWhatUserWants()
+        {
+            string input = Console.ReadLine().ToLower();
+
+            if (input == "title" || input == "titles")
+                return "titles";
+            else if (input == "genre")
+                return "genre";
+            else
+                PrintRedMessageToConsole("Oops, please try 'title', or 'genre'");
+                return CheckWhatUserWants(); // If they failed to enter the correct string, check again until a valid input is made!
         }
     }
 }
