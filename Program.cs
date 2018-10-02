@@ -45,11 +45,10 @@ namespace Hoursillgetback
             {
                 bool isSearching = true;
                 while (isSearching) {
-                    Console.WriteLine();
-                    PrintRedMessageToConsole("What genre were you after?");
-                    string genre = Console.ReadLine();
+                    // Check what genre that user wants information for:
+                    string genre = DetermineGenre();
                     
-                    // Begin grabbing random titles by genre from iMDBB and store them as an array:
+                    // Begin grabbing random titles by genre from iMDBB's top-rated and store them as an array:
                     PrintRedMessageToConsole("Searching...");
                     string[] titles = FetchUniqueTitlesByGenre(genre);
                     
@@ -229,7 +228,15 @@ namespace Hoursillgetback
                 return "genre";
             else
                 PrintRedMessageToConsole("Oops, please try 'title', or 'genre'");
-                return CheckWhatUserWants(); // If they failed to enter the correct string, check again until a valid input is made!
+                return CheckWhatUserWants(); // If they failed to enter the correct string, check again until a valid input is made5!
+        }
+
+        // For determining the genre of movies the user wants information for:
+        static string DetermineGenre()
+        {
+            Console.WriteLine();
+            PrintRedMessageToConsole("What genre were you after?");
+            return Console.ReadLine();
         }
     }
 }
