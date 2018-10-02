@@ -18,69 +18,53 @@ namespace Hoursillgetback
         {
             GetAppInfo("MoviePicker", "T. Hammond");
 
-            string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
-            string[] negatives = { "n", "no", "nah", "not yet", "nope" };
-
-            // bools provide a switch to different programs:
-            bool enteringByTitles = false;
-            bool enteringByGenre = false;
+            string enteringBy = "";
 
             // TODO: Wrap these red-coloured console messages into own method.
             PrintRedMessageToConsole("Did you want info for titles you wanted to compare? Or did you want top-rated picks by genre?");
             string input = Console.ReadLine().ToLower();
 
             if (input == "title" || input == "titles")
-            {
-                enteringByTitles = true;
-            }
+                enteringBy = "titles";
             else if (input == "genre")
-            {
-                enteringByGenre = true;
-            }
+                enteringBy = "genre";
             else
-            {
                 PrintRedMessageToConsole("Oops, please try 'title', or 'genre'");
-            }
 
-            while (enteringByTitles) // TODO: need to wrap this functionality into its own program?
+            // Init program:
+            if (enteringBy == "titles")
             {
-                // Gather / return all the input movie titles into an array:
-                string[] movieTitles = GetMovieTitles();
+                bool isSearching = true;
+                while (isSearching) {
+                    // Gather / return all the input movie titles into an array:
+                    string[] movieTitles = GetMovieTitles();
+                    
+                    // Grab and display movie data for each movie title input:
+                    PresentInformationByTitles(movieTitles);
+                    
+                    // After the relevant info has been presented -- check the user has finished searching:
 
-                // Grab and display movie data for each movie title input:
-                PresentInformationByTitles(movieTitles);
-
-                // After the relevant info has been presented -- check the user has finished searching:
-                PrintRedMessageToConsole("Finished searching?");
-                string answer = Console.ReadLine();
-
-                if (Array.Exists(affirmatives, el => el == answer))
-                {
-                    enteringByTitles = false; // exits out of the loop.
-                }
-                else if (Array.Exists(negatives, el => el == answer))
-                {
-                    enteringByTitles = true;
-                }
-                else // if the user input was invalid / not recognised... TODO: sort functionality here
-                {
-                    Console.WriteLine("Input was invalid, continuing program..."); // TODO: need it to ask for prompt and re-eval 
                 }
             }
-
-            // Wrap this logic into its own method / program? Look into (needs access to global vars to switch on bools)
-            while (enteringByGenre)
+            else if (enteringBy == "genre")
             {
-                PrintRedMessageToConsole("What genre were you after?");
-                string genre = Console.ReadLine();
+                bool isSearching = true;
+                while (isSearching) {
+                    PrintRedMessageToConsole("What genre were you after?");
+                    string genre = Console.ReadLine();
+                    
+                    // Begin grabbing random titles by genre from iMDBB and store them as an array:
+                    PrintRedMessageToConsole("Searching...");
+                    string[] titles = FetchUniqueTitlesByGenre(genre);
+                    
+                    // ...then
+                    PresentInformationByTitles(titles);
 
-                // Begin grabbing random titles by genre from iMDBB and store them as an array:
-                PrintRedMessageToConsole("Searching...");
-                string[] titles = FetchUniqueTitlesByGenre(genre);
-
-                // ...then
-                PresentInformationByTitles(titles);
+                    // ask if the user wants to search again
+                    isSearching = CheckUserFinished();
+                }
             }
+
         }
 
         // Methods separate to main entry point ----------------------------------------------------------------------------------
@@ -132,7 +116,8 @@ namespace Hoursillgetback
                 }
                 catch
                 {
-                    PrintRedMessageToConsole($"Couldn't manage to find anything for '{title}'!");
+                    PrintRedMessageToConsole($"Couldn't manage to find any data for '{title}'!");
+                    Console.WriteLine();
                     //Console.WriteLine($"{ex}"); ...for Exception ex 
                 }
             }
@@ -174,7 +159,7 @@ namespace Hoursillgetback
             Console.WriteLine();
         }
 
-        // generating 5 random indexes between 0 and the specified max.
+        // For generating 5 random indexes between 0 and the specified max.
         static int[] GenerateUniqueIndexes(int max)
         {
             List<int> indexes = new List<int>();
@@ -209,6 +194,31 @@ namespace Hoursillgetback
             }
 
             return titles.ToArray();
+        }
+
+        // Method which returns a bool to check whether a user wants to keep searching:
+        static bool CheckUserFinished()
+        {
+            // Arrays of answers to check conditionally:
+            string[] affirmatives = { "yes", "ye", "y", "yep", "yup", "yeah" };
+            string[] negatives = { "n", "no", "nah", "not yet", "nope" };
+
+            PrintRedMessageToConsole("Finished searching?");
+            string answer = Console.ReadLine();
+
+            if (Array.Exists(affirmatives, el => el == answer))
+            {
+                return false; // exits out of the loop.
+            }
+            else if (Array.Exists(negatives, el => el == answer))
+            {
+                return true;
+            }
+            else // if the user input was invalid / not recognised... TODO: sort functionality here
+            {
+                PrintRedMessageToConsole("Input was invalid, continuining program"); // TODO: need it to ask for prompt and re-eval 
+                return true;
+            }
         }
     }
 }
