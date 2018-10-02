@@ -99,7 +99,7 @@ The `GenerateUniqueIndexes(int max)` method looks a bit like this...
 ```
 Once 5 unique titles from IMDB's top-rated section have been grabbed, the program makes `.get()` requests to [OMDb API](http://www.omdbapi.com/):
 ```c#
-string[] titles = FetchUniqueTitlesByGenre(genre);
+                    string[] titles = FetchUniqueTitlesByGenre(genre);
                     
                     // ...then
                     PresentInformationByTitles(titles);
