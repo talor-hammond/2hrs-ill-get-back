@@ -85,15 +85,65 @@ The `GenerateUniqueIndexes(int max)` method looks a bit like this...
         static int[] GenerateUniqueIndexes(int max)
         {
             List<int> indexes = new List<int>();
-            Random rnd = new Random();
+            Random rnd = new Random(); // gives us access to the `.Next(min, max)` method
 
-            while (indexes.Count < 5)
+            while (indexes.Count < 5) // because we only want to create 5 unique indexes to iterate through.
             {
                 int randomIndex = rnd.Next(0, max);
                 if (!indexes.Contains(randomIndex))
-                    indexes.Add(randomIndex);
+                    indexes.Add(randomIndex);  // only if the index doesn't exist in the list already
             }
 
             return indexes.ToArray();
+        }
+```
+Once 5 unique titles from IMDB's top-rated section have been grabbed, the program makes `.get()` requests to [OMDb API](http://www.omdbapi.com/):
+```c#
+string[] titles = FetchUniqueTitlesByGenre(genre);
+                    
+                    // ...then
+                    PresentInformationByTitles(titles);
+```
+
+Requests for movie information are made for each title in the array of titles fed through:
+```c#
+        // For displaying an array of movie information:
+        static public void PresentInformationByTitles(string[] titles)
+        {
+            foreach (string title in titles)
+            {
+                try
+                {
+                    RequestMovieInformation(title).Wait();
+                }
+                catch
+                {
+                    PrintRedMessageToConsole($"Couldn't manage to find any data for '{title}'!");
+                    Console.WriteLine();
+                    //Console.WriteLine($"{ex}"); ...for Exception ex 
+                }
+            }
+        }
+```
+
+This method takes a title and makes dynamic requests -- we tell the program `await` to make sure the asynchronous request resolves w the relevant data before continuing:
+```c#
+        // For gathering specific movie information by title from omdb api:
+        static public async Task RequestMovieInformation(string title)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"Fetching information for '{title}'...");
+            Console.ResetColor();
+
+            string url = "http://www.omdbapi.com/";
+            string apiKey = "4edeff6c";
+            HttpClient client = new HttpClient();
+
+            string response = await client.GetStringAsync($"{url}?t={title}&apikey={apiKey}");
+
+            JObject movieDetails = JObject.Parse(response);
+
+            // Presenting our parsed-data:
+            WriteMovieDetails(movieDetails);
         }
 ```
