@@ -18,10 +18,13 @@ namespace Hoursillgetback
         {
             GetAppInfo("MoviePicker", "T. Hammond");
 
-            string enteringBy = "";
+            string enteringBy = ""; // TODO: wrap the logic below into method that returns a string into this variable
 
-            // TODO: Wrap these red-coloured console messages into own method.
-            PrintRedMessageToConsole("Did you want info for titles you wanted to compare? Or did you want top-rated picks by genre?");
+            PrintRedMessageToConsole("Did you want info for titles you wanted to compare?");
+            PrintRedMessageToConsole("Or did you want top-rated picks by genre?");
+            Console.WriteLine("Try entering 'titles', or 'genre'...");
+            Console.WriteLine();
+
             string input = Console.ReadLine().ToLower();
 
             if (input == "title" || input == "titles")
@@ -41,15 +44,16 @@ namespace Hoursillgetback
                     
                     // Grab and display movie data for each movie title input:
                     PresentInformationByTitles(movieTitles);
-                    
-                    // After the relevant info has been presented -- check the user has finished searching:
 
+                    // Check the user has finished searching:
+                    isSearching = CheckUserFinished();
                 }
             }
             else if (enteringBy == "genre")
             {
                 bool isSearching = true;
                 while (isSearching) {
+                    Console.WriteLine();
                     PrintRedMessageToConsole("What genre were you after?");
                     string genre = Console.ReadLine();
                     
@@ -60,7 +64,7 @@ namespace Hoursillgetback
                     // ...then
                     PresentInformationByTitles(titles);
 
-                    // ask if the user wants to search again
+                    // Check the user has finished searching:
                     isSearching = CheckUserFinished();
                 }
             }
@@ -88,7 +92,8 @@ namespace Hoursillgetback
         // For getting an array of movie titles from user input:
         static string[] GetMovieTitles() // returns an array of strings
         {
-            Console.WriteLine("What movie titles did you want to compare? [enter 'q' when finished]");
+            Console.WriteLine();
+            PrintRedMessageToConsole("What movie titles did you want to compare? [enter 'q' when finished]");
             List<string> movieTitles = new List<string>();
 
             bool stillEnteringTitles = true;
@@ -214,7 +219,7 @@ namespace Hoursillgetback
             {
                 return true;
             }
-            else // if the user input was invalid / not recognised... TODO: sort functionality here
+            else // if the user input was invalid / not recognised...
             {
                 PrintRedMessageToConsole("Input was invalid, continuining program"); // TODO: need it to ask for prompt and re-eval 
                 return true;
