@@ -10,3 +10,29 @@ C# .NET async-console program that helps you pick the right movie every time (25
     * **If you don't have any titles on hand**, you can opt to enter a genre -- and the program grabs 5 random titles out of 50 from iMDB's top-rated under that category (I used *HtmlAgilityPack* to pick-out title data for x genre from iMDB)
     
 ### Code-snippets
+The program begins by asking users whether they want to search a list of movie titles, or randomly select information from a specific genre...
+```c#
+// Ask the user what type of search they want to make:
+            PrintRedMessageToConsole("Did you want info for titles you wanted to compare?");
+            PrintRedMessageToConsole("Or did you want top-rated picks by genre?");
+            Console.WriteLine("Try entering 'titles', or 'genre'...");
+            Console.WriteLine();
+
+            string enteringBy = CheckWhatUserWants();
+```
+... the `CheckWhatUserWants()` method returns a string into the `enteringBy` variable; it calls itself recursively if the user fails to enter a valid input:
+```c#
+// For determing what type of search the user wants to make:
+        static string CheckWhatUserWants()
+        {
+            string input = Console.ReadLine().ToLower();
+
+            if (input == "title" || input == "titles")
+                return "titles";
+            else if (input == "genre")
+                return "genre";
+            else
+                PrintRedMessageToConsole("Oops, please try 'title', or 'genre'");
+                return CheckWhatUserWants(); // Checks recursively until a valid input is made.
+        }
+```
