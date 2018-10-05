@@ -8,7 +8,13 @@ C# .NET async-console program that helps you pick the right movie every time (25
 ### The solution
 * An **async-console program** that presents brief plot / genre / rating information for any number of titles you want to search for.
     * **If you don't have any titles on hand**, you can opt to enter a genre -- and the program grabs 5 random titles out of 50 from iMDB's top-rated under that category (I used *HtmlAgilityPack* to pick-out title data for x genre from iMDB)
-    
+
+![First prompt](https://media.giphy.com/media/5dUIbDhqYglfDQBdC0/giphy.gif)
+*You can either search an array of titles to be compared, or search a particular genre
+
+![](https://media.giphy.com/media/5biuELu0QqpgASzc7g/giphy.gif)
+*Fetching 50 titles from iMDB by genre, generating 5 random ones, and then making a request to OMDb API for the relevant info
+
 ### Code-snippets
 The program begins by asking users whether they want to search a list of movie titles, or randomly select information from a specific genre...
 ```c#
