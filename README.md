@@ -158,5 +158,5 @@ This method takes a title and makes dynamic requests -- we tell the program `awa
 
 ### Conclusion
 Had an awesome time using C# on the .NET framework for the first time --  especially creating a cool little executable / program that has some use.
-* The language itself felt different syntactically; but much the same in functionality as any other functional programming language, so building the logic for the program felt natural
+* Being staticly-typed, the language itself felt different syntactically; but much the same in functionality as any other functional programming language, so building the logic for the program felt natural -- nb: the language does feel cumbersome compared to a dynamic-language like JavaScript
 * First go with web-scraping (plz don't arrest me) went super smoothly thanks to `HtmlAgilityPack` -- `puppeteer` is a relative library / `npm` that can achieve the same thing with JavaScript
